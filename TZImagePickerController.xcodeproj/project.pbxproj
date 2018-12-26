@@ -13,6 +13,15 @@
 		6DC358661CC8BAFD00898D29 /* TZImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6DC358651CC8BAFD00898D29 /* TZImagePickerController.bundle */; };
 		6DC84D0A1DF5358500A107A9 /* TZImageCropManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DC84D091DF5358500A107A9 /* TZImageCropManager.m */; };
 		6DD0502B1DF659ED0057C78D /* TZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DD0502A1DF659ED0057C78D /* TZProgressView.m */; };
+		8BA3307C21D36F12000046AB /* PhotoTweakView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3307621D36F12000046AB /* PhotoTweakView.m */; };
+		8BA3307D21D36F12000046AB /* PhotoTweakView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3307621D36F12000046AB /* PhotoTweakView.m */; };
+		8BA3307E21D36F12000046AB /* UIColor+Tweak.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BA3307721D36F12000046AB /* UIColor+Tweak.h */; };
+		8BA3307F21D36F12000046AB /* UIColor+Tweak.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3307821D36F12000046AB /* UIColor+Tweak.m */; };
+		8BA3308021D36F12000046AB /* UIColor+Tweak.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3307821D36F12000046AB /* UIColor+Tweak.m */; };
+		8BA3308121D36F12000046AB /* PhotoTweaksViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BA3307921D36F12000046AB /* PhotoTweaksViewController.h */; };
+		8BA3308221D36F12000046AB /* PhotoTweakView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8BA3307A21D36F12000046AB /* PhotoTweakView.h */; };
+		8BA3308321D36F12000046AB /* PhotoTweaksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3307B21D36F12000046AB /* PhotoTweaksViewController.m */; };
+		8BA3308421D36F12000046AB /* PhotoTweaksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA3307B21D36F12000046AB /* PhotoTweaksViewController.m */; };
 		90020E1320F8840800D3AB10 /* TZImagePickerController.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 90020E1220F8840800D3AB10 /* TZImagePickerController.podspec */; };
 		90020E1520F8840F00D3AB10 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 90020E1420F8840E00D3AB10 /* README.md */; };
 		900E65811C2BB8D5003D9A9E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 900E65801C2BB8D5003D9A9E /* main.m */; };
@@ -125,6 +134,12 @@
 		6DC84D091DF5358500A107A9 /* TZImageCropManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZImageCropManager.m; sourceTree = "<group>"; };
 		6DD050291DF659ED0057C78D /* TZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZProgressView.h; sourceTree = "<group>"; };
 		6DD0502A1DF659ED0057C78D /* TZProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZProgressView.m; sourceTree = "<group>"; };
+		8BA3307621D36F12000046AB /* PhotoTweakView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoTweakView.m; sourceTree = "<group>"; };
+		8BA3307721D36F12000046AB /* UIColor+Tweak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Tweak.h"; sourceTree = "<group>"; };
+		8BA3307821D36F12000046AB /* UIColor+Tweak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Tweak.m"; sourceTree = "<group>"; };
+		8BA3307921D36F12000046AB /* PhotoTweaksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoTweaksViewController.h; sourceTree = "<group>"; };
+		8BA3307A21D36F12000046AB /* PhotoTweakView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoTweakView.h; sourceTree = "<group>"; };
+		8BA3307B21D36F12000046AB /* PhotoTweaksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoTweaksViewController.m; sourceTree = "<group>"; };
 		90020E1220F8840800D3AB10 /* TZImagePickerController.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TZImagePickerController.podspec; sourceTree = SOURCE_ROOT; };
 		90020E1420F8840E00D3AB10 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		900E657C1C2BB8D5003D9A9E /* TZImagePickerController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TZImagePickerController.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -222,6 +237,19 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		8BA3307521D36EFE000046AB /* ImageCrop */ = {
+			isa = PBXGroup;
+			children = (
+				8BA3307921D36F12000046AB /* PhotoTweaksViewController.h */,
+				8BA3307B21D36F12000046AB /* PhotoTweaksViewController.m */,
+				8BA3307A21D36F12000046AB /* PhotoTweakView.h */,
+				8BA3307621D36F12000046AB /* PhotoTweakView.m */,
+				8BA3307721D36F12000046AB /* UIColor+Tweak.h */,
+				8BA3307821D36F12000046AB /* UIColor+Tweak.m */,
+			);
+			name = ImageCrop;
+			sourceTree = "<group>";
+		};
 		900E65731C2BB8D5003D9A9E = {
 			isa = PBXGroup;
 			children = (
@@ -299,6 +327,7 @@
 		900EEFF51C2BBF7600EA709B /* TZImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
+				8BA3307521D36EFE000046AB /* ImageCrop */,
 				900EEFF61C2BBF9500EA709B /* TZImagePickerController.h */,
 				900EEFF71C2BBF9500EA709B /* TZImagePickerController.m */,
 				900EEFFC1C2BD58B00EA709B /* TZPhotoPickerController.h */,
@@ -386,10 +415,13 @@
 				9F763A761FA0741D00D9E526 /* TZImageManager.h in Headers */,
 				9F763A781FA0741D00D9E526 /* TZLocationManager.h in Headers */,
 				9F763A711FA0741D00D9E526 /* TZPhotoPreviewController.h in Headers */,
+				8BA3307E21D36F12000046AB /* UIColor+Tweak.h in Headers */,
 				9F763A721FA0741D00D9E526 /* TZPhotoPreviewCell.h in Headers */,
+				8BA3308121D36F12000046AB /* PhotoTweaksViewController.h in Headers */,
 				9F763A701FA0741D00D9E526 /* TZAssetCell.h in Headers */,
 				9F763A791FA0741D00D9E526 /* UIView+Layout.h in Headers */,
 				9F763A6F1FA0741D00D9E526 /* TZPhotoPickerController.h in Headers */,
+				8BA3308221D36F12000046AB /* PhotoTweakView.h in Headers */,
 				9F763A751FA0741D00D9E526 /* TZProgressView.h in Headers */,
 				9F763A771FA0741D00D9E526 /* TZImageCropManager.h in Headers */,
 			);
@@ -482,7 +514,7 @@
 				TargetAttributes = {
 					900E657B1C2BB8D5003D9A9E = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = T86X98NCU2;
+						DevelopmentTeam = AA4YKUFB2C;
 						ProvisioningStyle = Automatic;
 					};
 					900E65941C2BB8D5003D9A9E = {
@@ -495,7 +527,7 @@
 					};
 					9F763A411FA071CF00D9E526 = {
 						CreatedOnToolsVersion = 9.0.1;
-						DevelopmentTeam = T86X98NCU2;
+						DevelopmentTeam = 5468G64RA7;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -575,16 +607,19 @@
 				90CE84B71C3BABB6003D0779 /* TZVideoPlayerController.m in Sources */,
 				900EF0021C2BD7E400EA709B /* TZAssetCell.m in Sources */,
 				6DD0502B1DF659ED0057C78D /* TZProgressView.m in Sources */,
+				8BA3307C21D36F12000046AB /* PhotoTweakView.m in Sources */,
 				6D32B9BD1CD83640005CE1E0 /* LxGridViewFlowLayout.m in Sources */,
 				6D4608311DFFC60D004FB009 /* TZGifPhotoPreviewController.m in Sources */,
 				900EF0161C2C134900EA709B /* TZPhotoPreviewCell.m in Sources */,
 				900E65871C2BB8D5003D9A9E /* ViewController.m in Sources */,
 				90CE84AE1C3A89EF003D0779 /* TZImageManager.m in Sources */,
 				901F2295215CABD600F604ED /* FLAnimatedImage.m in Sources */,
+				8BA3307F21D36F12000046AB /* UIColor+Tweak.m in Sources */,
 				900E65841C2BB8D5003D9A9E /* AppDelegate.m in Sources */,
 				901F2296215CABD600F604ED /* FLAnimatedImageView.m in Sources */,
 				900E65811C2BB8D5003D9A9E /* main.m in Sources */,
 				900EF0121C2C107400EA709B /* TZPhotoPreviewController.m in Sources */,
+				8BA3308321D36F12000046AB /* PhotoTweaksViewController.m in Sources */,
 				901CC3FC21CB758500C55443 /* TZImageRequestOperation.m in Sources */,
 				6D5358CD1D64600F00928CC6 /* NSBundle+TZImagePicker.m in Sources */,
 				900EEFF81C2BBF9500EA709B /* TZImagePickerController.m in Sources */,
@@ -614,8 +649,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				901CC3FB21CB757500C55443 /* TZImageRequestOperation.m in Sources */,
+				8BA3308021D36F12000046AB /* UIColor+Tweak.m in Sources */,
 				9F763A501FA072E500D9E526 /* TZImagePickerController.m in Sources */,
 				9F763A521FA072E500D9E526 /* TZPhotoPickerController.m in Sources */,
+				8BA3308421D36F12000046AB /* PhotoTweaksViewController.m in Sources */,
 				9F763A541FA072E500D9E526 /* TZAssetCell.m in Sources */,
 				9F763A561FA072E500D9E526 /* TZAssetModel.m in Sources */,
 				9F763A581FA072E500D9E526 /* TZPhotoPreviewController.m in Sources */,
@@ -625,6 +662,7 @@
 				9F763A601FA072E500D9E526 /* TZProgressView.m in Sources */,
 				9F763A621FA072E500D9E526 /* TZImageManager.m in Sources */,
 				9F763A641FA072E500D9E526 /* TZImageCropManager.m in Sources */,
+				8BA3307D21D36F12000046AB /* PhotoTweakView.m in Sources */,
 				9F763A661FA072E500D9E526 /* TZLocationManager.m in Sources */,
 				9F763A681FA072E500D9E526 /* UIView+Layout.m in Sources */,
 				9F763A6A1FA072E500D9E526 /* NSBundle+TZImagePicker.m in Sources */,
@@ -790,10 +828,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = T86X98NCU2;
+				DEVELOPMENT_TEAM = AA4YKUFB2C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TZImagePickerController",
@@ -813,10 +851,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = T86X98NCU2;
+				DEVELOPMENT_TEAM = AA4YKUFB2C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TZImagePickerController",
@@ -896,12 +934,12 @@
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = T86X98NCU2;
+				DEVELOPMENT_TEAM = 5468G64RA7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -936,12 +974,12 @@
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = T86X98NCU2;
+				DEVELOPMENT_TEAM = 5468G64RA7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";

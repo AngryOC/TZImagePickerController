@@ -18,8 +18,9 @@
 #import "TZLocationManager.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import "TZImageRequestOperation.h"
+#import "PhotoTweaksViewController.h"
 
-@interface TZPhotoPickerController ()<UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAlertViewDelegate> {
+@interface TZPhotoPickerController ()<UICollectionViewDataSource,UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIAlertViewDelegate,PhotoTweaksViewControllerDelegate> {
     NSMutableArray *_models;
     
     UIView *_bottomToolBar;
@@ -209,11 +210,11 @@ static CGFloat itemMargin = 5;
 - (void)configBottomToolBar {
     TZImagePickerController *tzImagePickerVc = (TZImagePickerController *)self.navigationController;
     if (!tzImagePickerVc.showSelectBtn) return;
-
+    
     _bottomToolBar = [[UIView alloc] initWithFrame:CGRectZero];
     CGFloat rgb = 253 / 255.0;
     _bottomToolBar.backgroundColor = [UIColor colorWithRed:rgb green:rgb blue:rgb alpha:1.0];
-
+    
     _previewButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_previewButton addTarget:self action:@selector(previewButtonClick) forControlEvents:UIControlEventTouchUpInside];
     _previewButton.titleLabel.font = [UIFont systemFontOfSize:16];
@@ -291,7 +292,7 @@ static CGFloat itemMargin = 5;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-
+    
     TZImagePickerController *tzImagePickerVc = (TZImagePickerController *)self.navigationController;
     
     CGFloat top = 0;
@@ -327,7 +328,7 @@ static CGFloat itemMargin = 5;
     }
     _bottomToolBar.frame = CGRectMake(0, toolBarTop, self.view.tz_width, toolBarHeight);
     
-    CGFloat previewWidth = [tzImagePickerVc.previewBtnTitleStr boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil].size.width + 2;    
+    CGFloat previewWidth = [tzImagePickerVc.previewBtnTitleStr boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX) options:NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16]} context:nil].size.width + 2;
     if (!tzImagePickerVc.allowPreview) {
         previewWidth = 0.0;
     }
@@ -615,11 +616,63 @@ static CGFloat itemMargin = 5;
             [self.navigationController pushViewController:gifPreviewVc animated:YES];
         }
     } else {
+        
+        //判断如果是否需要使用自定义裁剪裁剪 单个图片使用裁剪
+        TZImagePickerController *_tzImagePickerVc = (TZImagePickerController *)self.navigationController;
+        if (_tzImagePickerVc.maxImagesCount <= 1 && _tzImagePickerVc.allowCrop && _tzImagePickerVc.allowPickingImage)  {
+            
+            //UIImage *image = [UIImage imageNamed:@"photo_delete"];
+            [_tzImagePickerVc showProgressHUD];
+            __weak typeof(self) weakSelf = self;
+            TZAssetModel *selModel = _models[index];
+            [[TZImageManager manager] getPhotoWithAsset:model.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+                [_tzImagePickerVc hideProgressHUD];
+                if ([_tzImagePickerVc.topViewController isKindOfClass:[PhotoTweaksViewController class]]){
+                    PhotoTweaksViewController * vc = (PhotoTweaksViewController *)_tzImagePickerVc.topViewController;
+                    //
+                    [vc resetOriginImage:photo];
+                    return;
+                }
+                PhotoTweaksViewController *photoTweaksViewController = [[PhotoTweaksViewController alloc] initWithImage:photo];
+                photoTweaksViewController.model = selModel;
+                photoTweaksViewController.delegate = weakSelf;
+                photoTweaksViewController.autoSaveToLibray = NO;
+                photoTweaksViewController.maxRotationAngle = M_PI_4;
+                [_tzImagePickerVc pushViewController:photoTweaksViewController animated:true];
+                
+            } progressHandler:nil networkAccessAllowed:YES];
+            
+            //            [[TZImageManager manager] getOriginalPhotoWithAsset:((TZAssetModel *)_models[index]).asset completion:^(UIImage *photo, NSDictionary *info) {
+            //                [_tzImagePickerVc hideProgressHUD];
+            //                PhotoTweaksViewController *photoTweaksViewController = [[PhotoTweaksViewController alloc] initWithImage:photo];
+            //                photoTweaksViewController.model = _models[index];
+            //                photoTweaksViewController.delegate = self;
+            //                photoTweaksViewController.autoSaveToLibray = NO;
+            //                photoTweaksViewController.maxRotationAngle = M_PI_4;
+            //                [_tzImagePickerVc pushViewController:photoTweaksViewController animated:true];
+            //            }];
+            
+            
+            return;
+        }
+        
         TZPhotoPreviewController *photoPreviewVc = [[TZPhotoPreviewController alloc] init];
         photoPreviewVc.currentIndex = index;
         photoPreviewVc.models = _models;
         [self pushPhotoPrevireViewController:photoPreviewVc];
     }
+}
+
+- (void)photoTweaksController:(PhotoTweaksViewController *)controller didFinishWithCroppedImage:(UIImage *)croppedImage
+{
+    [self didGetAllPhotos:@[croppedImage] assets:@[controller.model.asset] infoArr:nil];
+}
+
+- (void)photoTweaksControllerDidCancel:(PhotoTweaksViewController *)controller
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.collectionView reloadData];
+    [self refreshBottomToolBarStatus];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -712,6 +765,7 @@ static CGFloat itemMargin = 5;
 - (void)pushPhotoPrevireViewController:(TZPhotoPreviewController *)photoPreviewVc {
     [self pushPhotoPrevireViewController:photoPreviewVc needCheckSelectedModels:NO];
 }
+
 
 - (void)pushPhotoPrevireViewController:(TZPhotoPreviewController *)photoPreviewVc needCheckSelectedModels:(BOOL)needCheckSelectedModels {
     __weak typeof(self) weakSelf = self;
@@ -834,14 +888,41 @@ static CGFloat itemMargin = 5;
     
     if (tzImagePickerVc.maxImagesCount <= 1) {
         if (tzImagePickerVc.allowCrop && asset.mediaType == PHAssetMediaTypeImage) {
-            TZPhotoPreviewController *photoPreviewVc = [[TZPhotoPreviewController alloc] init];
-            if (tzImagePickerVc.sortAscendingByModificationDate) {
-                photoPreviewVc.currentIndex = _models.count - 1;
-            } else {
-                photoPreviewVc.currentIndex = 0;
-            }
-            photoPreviewVc.models = _models;
-            [self pushPhotoPrevireViewController:photoPreviewVc];
+            //            TZPhotoPreviewController *photoPreviewVc = [[TZPhotoPreviewController alloc] init];
+            //            if (tzImagePickerVc.sortAscendingByModificationDate) {
+            //                photoPreviewVc.currentIndex = _models.count - 1;
+            //            } else {
+            //                photoPreviewVc.currentIndex = 0;
+            //            }
+            //            photoPreviewVc.models = _models;
+            //            [self pushPhotoPrevireViewController:photoPreviewVc];
+            TZAssetModel *selModel = assetModel;
+            __weak typeof(self) weakSelf = self;
+//            [[TZImageManager manager] getPhotoWithAsset:selModel.asset completion:^(UIImage *photo, NSDictionary *info, BOOL isDegraded) {
+//                if ([tzImagePickerVc.topViewController isKindOfClass:[PhotoTweaksViewController class]]){
+//                    PhotoTweaksViewController * vc = (PhotoTweaksViewController *)tzImagePickerVc.topViewController;
+//                    //
+//                    [vc resetOriginImage:photo];
+//                    return;
+//                }
+//                PhotoTweaksViewController *photoTweaksViewController = [[PhotoTweaksViewController alloc] initWithImage:photo];
+//                photoTweaksViewController.model = selModel;
+//                photoTweaksViewController.delegate = weakSelf;
+//                photoTweaksViewController.autoSaveToLibray = NO;
+//                photoTweaksViewController.maxRotationAngle = M_PI_4;
+//                [tzImagePickerVc pushViewController:photoTweaksViewController animated:true];
+//                
+//            } progressHandler:nil networkAccessAllowed:YES];
+            
+            [[TZImageManager manager] getOriginalPhotoWithAsset:selModel.asset completion:^(UIImage *photo, NSDictionary *info) {
+                PhotoTweaksViewController *photoTweaksViewController = [[PhotoTweaksViewController alloc] initWithImage:photo];
+                photoTweaksViewController.model = selModel;
+                photoTweaksViewController.delegate = weakSelf;
+                photoTweaksViewController.autoSaveToLibray = NO;
+                photoTweaksViewController.maxRotationAngle = M_PI_4;
+                [tzImagePickerVc pushViewController:photoTweaksViewController animated:true];
+            }];
+            
         } else {
             [tzImagePickerVc addSelectedModel:assetModel];
             [self doneButtonClick];
@@ -997,3 +1078,4 @@ static CGFloat itemMargin = 5;
 }
 
 @end
+
