@@ -56,6 +56,10 @@
     self.navigationController.navigationBarHidden = false;
 }
 
+- (BOOL) shouldAutorotate{
+    return NO;
+}
+
 - (void)setupSubviews
 {
     

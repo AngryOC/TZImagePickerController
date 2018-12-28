@@ -237,19 +237,6 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		8BA3307521D36EFE000046AB /* ImageCrop */ = {
-			isa = PBXGroup;
-			children = (
-				8BA3307921D36F12000046AB /* PhotoTweaksViewController.h */,
-				8BA3307B21D36F12000046AB /* PhotoTweaksViewController.m */,
-				8BA3307A21D36F12000046AB /* PhotoTweakView.h */,
-				8BA3307621D36F12000046AB /* PhotoTweakView.m */,
-				8BA3307721D36F12000046AB /* UIColor+Tweak.h */,
-				8BA3307821D36F12000046AB /* UIColor+Tweak.m */,
-			);
-			name = ImageCrop;
-			sourceTree = "<group>";
-		};
 		900E65731C2BB8D5003D9A9E = {
 			isa = PBXGroup;
 			children = (
@@ -327,7 +314,12 @@
 		900EEFF51C2BBF7600EA709B /* TZImagePickerController */ = {
 			isa = PBXGroup;
 			children = (
-				8BA3307521D36EFE000046AB /* ImageCrop */,
+				8BA3307921D36F12000046AB /* PhotoTweaksViewController.h */,
+				8BA3307B21D36F12000046AB /* PhotoTweaksViewController.m */,
+				8BA3307A21D36F12000046AB /* PhotoTweakView.h */,
+				8BA3307621D36F12000046AB /* PhotoTweakView.m */,
+				8BA3307721D36F12000046AB /* UIColor+Tweak.h */,
+				8BA3307821D36F12000046AB /* UIColor+Tweak.m */,
 				900EEFF61C2BBF9500EA709B /* TZImagePickerController.h */,
 				900EEFF71C2BBF9500EA709B /* TZImagePickerController.m */,
 				900EEFFC1C2BD58B00EA709B /* TZPhotoPickerController.h */,

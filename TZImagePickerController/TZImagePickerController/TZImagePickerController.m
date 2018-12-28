@@ -140,6 +140,10 @@
     return self.statusBarStyle;
 }
 
+- (BOOL) shouldAutorotate{
+    return NO;
+}
+
 - (instancetype)initWithMaxImagesCount:(NSInteger)maxImagesCount delegate:(id<TZImagePickerControllerDelegate>)delegate {
     return [self initWithMaxImagesCount:maxImagesCount columnNumber:4 delegate:delegate pushPhotoPickerVc:YES];
 }
