@@ -16,6 +16,8 @@
  */
 @interface PhotoTweaksViewController : UIViewController
 
+@property (assign, nonatomic) CGFloat widthRatio;  //height = width*ration
+
 /**
  Image to process.
  */
@@ -76,7 +78,7 @@
 /**
  Creates a photo tweaks view controller with the image to process.
  */
-- (instancetype)initWithImage:(UIImage *)image;
+- (instancetype)initWithImage:(UIImage *)image widthRadio:(CGFloat) ratio;
 
 - (void)resetOriginImage:(UIImage *)image;
 

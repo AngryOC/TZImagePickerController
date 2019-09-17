@@ -28,12 +28,14 @@ extern const CGFloat kMaxRotationAngle;
 @end
 
 @interface CropView : UIView
+@property (assign, nonatomic) CGFloat widthRatio;  //height = width*ration
 @end
 
 @interface PhotoTweakView : UIView
 
 @property (nonatomic, assign, readonly) CGFloat angle;
 @property (nonatomic, assign, readonly) CGPoint photoContentOffset;
+@property (assign, nonatomic) CGFloat widthRatio;  //height = width*ration
 
 @property (nonatomic, strong, readonly) CropView *cropView;
 @property (nonatomic, strong, readonly) PhotoContentView *photoContentView;
@@ -43,7 +45,8 @@ extern const CGFloat kMaxRotationAngle;
 
 - (instancetype)initWithFrame:(CGRect)frame
                         image:(UIImage *)image
-             maxRotationAngle:(CGFloat)maxRotationAngle;
+             maxRotationAngle:(CGFloat)maxRotationAngle
+                   widthRatio:(CGFloat)ratio;
 
 - (instancetype)initWithFrame:(CGRect)frame
                         image:(UIImage *)image;

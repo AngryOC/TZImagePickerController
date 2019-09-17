@@ -15,9 +15,9 @@ static const NSUInteger kCropLines = 2;
 static const NSUInteger kGridLines = 9;
 
 static const CGFloat kCropViewHotArea = 20; //16
-static const CGFloat kMinimumCropArea = 100; //60
-static const CGFloat kMaximumCanvasWidthRatio = 0.75; //0.9
-static const CGFloat kMaximumCanvasHeightRatio = 0.75;//0.7
+static const CGFloat kMinimumCropArea = 80; //60
+static const CGFloat kMaximumCanvasWidthRatio = 0.9; //0.9
+static const CGFloat kMaximumCanvasHeightRatio = 0.9;//0.7
 static const CGFloat kCanvasHeaderHeigth = 60;
 static const CGFloat kCropViewCornerLength = 22;
 
@@ -248,15 +248,16 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         CGPoint p3 = CGPointMake(self.frame.size.width, self.frame.size.height);
         
         BOOL canChangeWidth = frame.size.width > kMinimumCropArea;
-        BOOL canChangeHeight = frame.size.height > kMinimumCropArea;
+        BOOL canChangeHeight = frame.size.height > (frame.size.width * self.widthRatio);
         
         if (distanceBetweenPoints(location, p0) < kCropViewHotArea) {
             CGFloat deltaX = location.x;
-            if (canChangeWidth || canChangeHeight) {
+            if (canChangeWidth && canChangeHeight) {
                 frame.origin.x += deltaX;
                 frame.size.width -= deltaX;
                 frame.origin.y += deltaX;
-                frame.size.height -= deltaX;
+                //frame.size.height -= deltaX;
+                frame.size.height = frame.size.width*self.widthRatio;
             }
             //            if (canChangeWidth) {
             //                frame.origin.x += location.x;
@@ -268,10 +269,10 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
             //            }
         } else if (distanceBetweenPoints(location, p1) < kCropViewHotArea) {
             CGFloat deltaX = frame.size.width - location.x;
-            if (canChangeWidth || canChangeHeight) {
+            if (canChangeWidth && canChangeHeight) {
                 frame.size.width = frame.size.width - deltaX;
                 frame.origin.y += deltaX;
-                frame.size.height -= deltaX;
+                frame.size.height = frame.size.width*self.widthRatio;
             }
             
             //            if (canChangeWidth) {
@@ -283,10 +284,10 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
             //            }
         } else if (distanceBetweenPoints(location, p2) < kCropViewHotArea) {
             CGFloat deltaX = location.x;
-            if (canChangeWidth || canChangeHeight) {
+            if (canChangeWidth && canChangeHeight) {
                 frame.origin.x += deltaX;
                 frame.size.width -= deltaX;
-                frame.size.height -= deltaX;
+                frame.size.height = frame.size.width*self.widthRatio;
             }
             
             
@@ -300,9 +301,9 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         } else if (distanceBetweenPoints(location, p3) < kCropViewHotArea) {
             
             CGFloat deltaX = frame.size.width - location.x;
-            if (canChangeWidth || canChangeHeight) {
+            if (canChangeWidth && canChangeHeight) {
                 frame.size.width -= deltaX;
-                frame.size.height -= deltaX;
+                frame.size.height = frame.size.width*self.widthRatio;
             }
             
             //            if (canChangeWidth) {
@@ -315,44 +316,48 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         
         else if (fabs(location.x - p0.x) < kCropViewHotArea) {
             CGFloat deltaX = location.x;
-            if (canChangeWidth || canChangeHeight) {
+            if (canChangeWidth && canChangeHeight) {
                 frame.origin.x += deltaX;
                 frame.size.width -= deltaX;
-                frame.size.height -= deltaX;
+                frame.size.height = frame.size.width*self.widthRatio;
             }
             
             //            if (canChangeWidth) {
             //                frame.origin.x += location.x;
             //                frame.size.width -= location.x;
             //            }
-        } else if (fabs(location.x - p1.x) < kCropViewHotArea) {
+        }
+         else if (fabs(location.x - p1.x) < kCropViewHotArea) {
             CGFloat deltaX = frame.size.width - location.x;
-            if (canChangeWidth || canChangeHeight) {
+            if (canChangeWidth && canChangeHeight) {
                 frame.size.width -= deltaX;
-                frame.size.height -= deltaX;
+                frame.size.height = frame.size.width*self.widthRatio;
             }
             
             //            if (canChangeWidth) {
             //                frame.size.width = location.x;
             //            }
-        } else if (fabs(location.y - p0.y) < kCropViewHotArea) {
+        }
+        
+        else if (fabs(location.y - p0.y) < kCropViewHotArea) {
             CGFloat deltaX = location.y;
-            if (canChangeWidth) {
+            if (canChangeWidth && canChangeHeight) {
                 frame.size.width = frame.size.width - deltaX;
                 frame.origin.y += deltaX;
-                frame.size.height -= deltaX;
+                frame.size.height = frame.size.width*self.widthRatio;
             }
             //            if (canChangeHeight) {
             //                frame.origin.y += location.y;
             //                frame.size.height -= location.y;
             //            }
-        } else if (fabs(location.y - p2.y) < kCropViewHotArea) {
+        }
+        else if (fabs(location.y - p2.y) < kCropViewHotArea) {
             CGFloat deltaX = frame.size.width - location.y;
-            if (canChangeHeight) {
+            if (canChangeWidth && canChangeHeight) {
                 frame.size.width -= deltaX;
-                frame.size.height -= deltaX;
+                frame.size.height = frame.size.width*self.widthRatio;
             }
-            
+
             //            if (canChangeHeight) {
             //                frame.size.height = location.y;
             //            }
@@ -524,6 +529,7 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
 - (instancetype)initWithFrame:(CGRect)frame
                         image:(UIImage *)image
              maxRotationAngle:(CGFloat)maxRotationAngle
+                   widthRatio:(CGFloat)ratio
 {
     if (self = [super init]) {
         
@@ -531,18 +537,19 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         
         _image = image;
         _maxRotationAngle = maxRotationAngle;
+        _widthRatio = ratio;
         
         // scale the image
         //_maximumCanvasSize = CGSizeMake(kMaximumCanvasWidthRatio * self.frame.size.width,
         //                                kMaximumCanvasHeightRatio * self.frame.size.height - kCanvasHeaderHeigth);
         _maximumCanvasSize = CGSizeMake(kMaximumCanvasWidthRatio * self.frame.size.width,
-                                        kMaximumCanvasHeightRatio * self.frame.size.width);
+                                        kMaximumCanvasHeightRatio * self.frame.size.width*self.widthRatio);
         
 //        CGFloat scaleX = image.size.width / self.maximumCanvasSize.width;
 //        CGFloat scaleY = image.size.height / self.maximumCanvasSize.height;
 //        CGFloat scale = MAX(scaleX, scaleY);
         //CGRect bounds = CGRectMake(0, 0, image.size.width / scale, image.size.height / scale);
-        CGRect bounds = CGRectMake(0, 0, kMaximumCanvasWidthRatio * self.frame.size.width, kMaximumCanvasWidthRatio * self.frame.size.width);
+        CGRect bounds = CGRectMake(0, 0, kMaximumCanvasWidthRatio * self.frame.size.width, kMaximumCanvasHeightRatio * self.frame.size.width*self.widthRatio);
         _originalSize = bounds.size;
         
         //_centerY = self.maximumCanvasSize.height / 2 + kCanvasHeaderHeigth;
@@ -592,8 +599,9 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
         _scrollView.photoContentView = self.photoContentView;
         [self.scrollView addSubview:_photoContentView];
         
-        _cropView = [[CropView alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.width)];
+        _cropView = [[CropView alloc] initWithFrame:CGRectMake(0, 0, self.scrollView.frame.size.width, self.scrollView.frame.size.height)];
         _cropView.center = self.scrollView.center;
+        _cropView.widthRatio = self.widthRatio;
         _cropView.delegate = self;
         [self addSubview:_cropView];
         
@@ -643,7 +651,7 @@ typedef NS_ENUM(NSInteger, CropCornerType) {
 
 - (instancetype)initWithFrame:(CGRect)frame image:(UIImage *)image
 {
-    return [self initWithFrame:frame image:image maxRotationAngle:kMaxRotationAngle];
+    return [self initWithFrame:frame image:image maxRotationAngle:kMaxRotationAngle widthRatio: 1.0];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event

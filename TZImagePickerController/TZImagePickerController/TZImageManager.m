@@ -31,6 +31,7 @@ static dispatch_once_t onceToken;
         // manager.cachingImageManager.allowsCachingHighQualityImages = YES;
         
         [manager configTZScreenWidth];
+        manager.widthRatio = 1.0;
     });
     return manager;
 }

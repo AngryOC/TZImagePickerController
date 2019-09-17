@@ -30,6 +30,8 @@
 /// The pixel width of output image, Default is 828px / 导出图片的宽度，默认828像素宽
 @property (nonatomic, assign) CGFloat photoWidth;
 
+@property (assign, nonatomic) CGFloat widthRatio;  //height = width*ration
+
 /// Default is 4, Use in photos collectionView in TZPhotoPickerController
 /// 默认4列, TZPhotoPickerController中的照片collectionView
 @property (nonatomic, assign) NSInteger columnNumber;

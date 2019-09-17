@@ -20,12 +20,13 @@
 
 @implementation PhotoTweaksViewController
 
-- (instancetype)initWithImage:(UIImage *)image
+- (instancetype)initWithImage:(UIImage *)image widthRadio:(CGFloat) ratio
 {
     if (self = [super init]) {
         _image = image;
         _autoSaveToLibray = YES;
         _maxRotationAngle = kMaxRotationAngle;
+        _widthRatio = ratio;
     }
     return self;
 }
@@ -66,7 +67,7 @@
     NSString* doneBtnTitleStr = [NSBundle tz_localizedStringForKey:@"Done"];
     NSString* cancelBtnTitleStr = [NSBundle tz_localizedStringForKey:@"Cancel"];
     
-    self.photoView = [[PhotoTweakView alloc] initWithFrame:self.view.bounds image:self.image maxRotationAngle:self.maxRotationAngle];
+    self.photoView = [[PhotoTweakView alloc] initWithFrame:self.view.bounds image:self.image maxRotationAngle:self.maxRotationAngle widthRatio:self.widthRatio];
     self.photoView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:self.photoView];
     

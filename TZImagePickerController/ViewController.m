@@ -342,7 +342,7 @@
     
     // 设置是否显示图片序号
     imagePickerVc.showSelectedIndex = self.showSelectedIndexSwitch.isOn;
-    
+    //[TZImageManager manager].widthRatio = 0.5;
     // 自定义gif播放方案
     [[TZImagePickerConfig sharedInstance] setGifImagePlayBlock:^(TZPhotoPreviewView *view, UIImageView *imageView, NSData *gifData, NSDictionary *info) {
         FLAnimatedImage *animatedImage = [FLAnimatedImage animatedImageWithGIFData:gifData];
