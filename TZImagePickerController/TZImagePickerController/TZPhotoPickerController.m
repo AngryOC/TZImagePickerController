@@ -633,9 +633,8 @@ static CGFloat itemMargin = 5;
                     [vc resetOriginImage:photo];
                     return;
                 }
-                PhotoTweaksViewController *photoTweaksViewController = [[PhotoTweaksViewController alloc] initWithImage:photo widthRadio: 0.5];
+                PhotoTweaksViewController *photoTweaksViewController = [[PhotoTweaksViewController alloc] initWithImage:photo widthRadio: self.widthRatio];
                 photoTweaksViewController.model = selModel;
-                photoTweaksViewController.widthRatio = 0.5;
                 photoTweaksViewController.delegate = weakSelf;
                 photoTweaksViewController.autoSaveToLibray = NO;
                 photoTweaksViewController.maxRotationAngle = M_PI_4;
@@ -916,7 +915,7 @@ static CGFloat itemMargin = 5;
 //            } progressHandler:nil networkAccessAllowed:YES];
             
             [[TZImageManager manager] getOriginalPhotoWithAsset:selModel.asset completion:^(UIImage *photo, NSDictionary *info) {
-                PhotoTweaksViewController *photoTweaksViewController = [[PhotoTweaksViewController alloc] initWithImage:photo widthRadio:[TZImageManager manager].widthRatio];
+                PhotoTweaksViewController *photoTweaksViewController = [[PhotoTweaksViewController alloc] initWithImage:photo widthRadio:self.widthRatio];
                 photoTweaksViewController.model = selModel;
                 photoTweaksViewController.delegate = weakSelf;
                 photoTweaksViewController.autoSaveToLibray = NO;
